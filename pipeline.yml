@@ -1,0 +1,28 @@
+---
+resources:
+
+- name: source-docker-image
+  type: docker-image
+  source:
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: {{source-docker-image}}
+
+- name: destination-harbor-image
+  type: docker-image
+  source:
+    repository: {{harbor-server-fqdn-repository}}
+    username: {{harbor-username}}
+    password: {{harbor-password}}
+    tag: "latest"
+    insecure_registries: [ {{harbor-server-fqdn}} ]
+
+jobs:
+- name: scanme-build-docker-image
+  public: true
+  serial: true
+  plan:
+  - get: source-docker-image
+    trigger: true
+  - put: destination-harbor-image
+ 

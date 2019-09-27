@@ -1,0 +1,1 @@
+fly --target example login --team-name my-team --concourse-url https://ci.example.com
